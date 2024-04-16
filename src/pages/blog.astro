@@ -5,10 +5,12 @@ import BlogPost from "../components/BlogPost.astro";
 import BlogHeader from "../components/BlogHeader.astro";
 import { butterCMS } from "../utils/buttercmssdk";
 
+// get draft status
+const preview = Astro.url.searchParams.get('preview') || 0;
 let data = null;
 
 try {
-  const blogData = await butterCMS.post.list({});
+  const blogData = await butterCMS.post.list({"preview": preview});
   data = blogData.data.data;
 } catch (err) {
   data = err?.response?.status;

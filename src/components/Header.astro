@@ -1,8 +1,31 @@
 ---
 import { butterCMS } from "../utils/buttercmssdk";
 
-const items = await butterCMS.content.retrieve(["navigation_menu"]);
+const {locale, slug} = Astro.params
+
+const preview = Astro.url.searchParams.get('preview') || null;
+
+// Set params dictionary
+let params = {}
+if (locale) {
+  params["locale"] = locale
+}
+if (preview) {
+  params["preview"] = 1
+}
+
+const items = await butterCMS.content.retrieve(["navigation_menu"], params);
 const menuItems = items.data.data.navigation_menu[0].menu_items;
+
+const getMenuLinkPath = (locale) => {
+  if (locale) {
+    return `/${locale}/landing-page/landing-page-with-components/`
+  } else {
+    return `/`
+  }
+}
+
+let menuLinkPath = getMenuLinkPath(locale)
 ---
 
 <header id="header">
@@ -43,7 +66,7 @@ const menuItems = items.data.data.navigation_menu[0].menu_items;
                   {
                     menuItems.map(({ label, url }) => (
                       <li class="nav-item">
-                        <a class="page-scroll " href={`/${url}`}>
+                        <a class="page-scroll " href={`${menuLinkPath}${url}`}>
                           {label}
                         </a>
                       </li>

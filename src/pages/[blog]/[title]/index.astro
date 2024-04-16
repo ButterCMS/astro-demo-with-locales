@@ -5,12 +5,16 @@ import MySiteLayout from "../../../layouts/MySiteLayout.astro";
 import { butterCMS } from "../../../utils/buttercmssdk";
 
 const { pathname } = Astro.url;
+const {slug} = Astro.params
+console.log(slug)
 const urlQuery = pathname.split("/")[2];
+// get draft status
+const preview = Astro.url.searchParams.get('preview') || 0;
 
 let detail = null;
 
 try {
-  const detailData = await butterCMS.post.retrieve(urlQuery);
+  const detailData = await butterCMS.post.retrieve(urlQuery, {"preview": preview});
 
   detail = detailData.data.data;
 } catch (err) {

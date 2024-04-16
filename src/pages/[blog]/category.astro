@@ -5,9 +5,11 @@ import MySiteLayout from "../../layouts/MySiteLayout.astro";
 import { butterCMS } from "../../utils/buttercmssdk";
 
 let availableData = null;
+const preview = Astro.url.searchParams.get('preview') || 0;
+
 
 try {
-  const categoryData = await butterCMS.post.list({});
+  const categoryData = await butterCMS.post.list({'preview': preview});
   availableData = categoryData.data.data;
 } catch (err) {
   availableData = err?.response?.status;

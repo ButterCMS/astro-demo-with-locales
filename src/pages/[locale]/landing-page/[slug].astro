@@ -1,21 +1,31 @@
 ---
-import Hero from "../../components/Hero.astro";
-import Cta from "../../components/Cta.astro";
-import FeatureSection from "../../components/FeatureSection.astro";
-import TestimonialSection from "../../components/TestimonialSection";
-import BlogSection from "../../components/BlogSection.astro";
-import MySiteLayout from "../../layouts/MySiteLayout.astro";
-import { butterCMS } from "../../utils/buttercmssdk";
+import Hero from "../../../components/Hero.astro";
+import Cta from "../../../components/Cta.astro";
+import FeatureSection from "../../../components/FeatureSection.astro";
+import TestimonialSection from "../../../components/TestimonialSection";
+import BlogSection from "../../../components/BlogSection.astro";
+import MySiteLayout from "../../../layouts/MySiteLayout.astro";
+import { butterCMS } from "../../../utils/buttercmssdk";
 
-const { pathname } = Astro.url;
-const urlQuery = pathname.split("/")[2];
+const {locale, slug} = Astro.params
+const preview = Astro.url.searchParams.get('preview') || null;
+
+// Set params dictionary
+let params = {}
+if (locale) {
+  params["locale"] = locale
+}
+if (preview) {
+  params["preview"] = 1
+}
 
 let data = null;
 
 try {
 	const blockData = await butterCMS.page.retrieve(
 		"landing-page",
-		urlQuery || "landing-page-with-components"
+		slug || "landing-page-with-components",
+		params
 	);
 
 	data = blockData.data.data;
