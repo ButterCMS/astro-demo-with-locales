@@ -6,11 +6,13 @@ import BlogPost from "../../../components/BlogPost.astro";
 
 const { pathname } = Astro.url;
 const urlQuery = pathname.split("/")[3];
+const preview = Astro.url.searchParams.get('preview') || 0;
+
 
 let availableData = null;
 
 try {
-  const tagData = await butterCMS.post.list({ tag_slug: urlQuery });
+  const tagData = await butterCMS.post.list({ tag_slug: urlQuery , "preview": preview});
 
   availableData = tagData.data.data;
 } catch (err) {

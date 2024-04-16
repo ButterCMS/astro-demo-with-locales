@@ -2,6 +2,9 @@
 
 # Astro + ButterCMS Starter Project
 
+Note: This is a customer version of the astro demo that will only work if 
+locales is enabled on your account.
+
 This Astro starter project fully integrates with dynamic sample content from your ButterCMS account, including main menu, pages, blog posts, categories, and tags, all with a beautiful, custom theme with already-implemented search functionality. All of the included sample content is automatically created in your account dashboard when you sign up for a free trial of ButterCMS.
 
 [View our live demo hosted at Vercel](https://astro-starter-buttercms.vercel.app/), or you can click a button below to deploy your own copy of our starter
@@ -53,4 +56,6 @@ The ButterCMS webhook settings are located at https://buttercms.com/webhooks/
 
 ### 6. Previewing Draft Changes
 
-By default, your starter project is set up to allow previewing of draft changes saved in your ButterCMS.com account. To disable this functionality, set the following value in your .env file: ASTRO_APP_BUTTER_CMS_PREVIEW=false
+To preview draft changes, pass `?preview=1` as a query parameter in the URL. 
+Note: previewing available on the main blog posts page, category page, tag page,
+landing pages, and for the collection items in the landing page navigation menu.
